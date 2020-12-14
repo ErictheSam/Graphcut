@@ -1,7 +1,7 @@
 import numpy as np
 import imageio
 from copy import deepcopy
-#from graph import Graph
+import sys
 import networkx as nx
 import random
 
@@ -345,11 +345,10 @@ class Mincut(object):
         return self.new[0:self.realRows,0:self.realCols]
 
 
+if __name__ == '__main__':
+    a = np.array(imageio.imread(sys.argv[1]),dtype=np.int)[:,:,0:3]
+    mincut = Mincut(a,int(sys.argv[3]),int(sys.argv[4]))
 
-a = np.array(imageio.imread("chickpeas.gif"),dtype=np.int)[:,:,0:3]
-s = a.shape
-mincut = Mincut(a,min(512,int(2.5 * a.shape[0])),min(512,int(2.5 * a.shape[1] )) )
-
-result = mincut.patch()
-rst = result.astype('uint8')
-imageio.imwrite("chickpeas.png",rst)
+    result = mincut.patch()
+    rst = result.astype('uint8')
+    imageio.imwrite(sys.argv[2],rst)
